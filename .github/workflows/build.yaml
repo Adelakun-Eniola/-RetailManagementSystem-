@@ -1,29 +1,4 @@
-#name : Java CI with Maven
-#
-#on:
-#  push:
-#    branches: ["EniolaBranch"]
-#  pull_request:
-#    branches: ["EniolaBranch"]
-#
-#jobs:
-#  test:
-#    name: Unit Test
-#    runs-on: ubuntu-latest
-#
-#    steps:
-#      - uses: actions/checkout@v1
-#      - name: Set up JDK 21
-#        uses: actions/setup-java@v1
-#        with:
-#          java-version: '21'
-#      - name: Maven Package
-#        run: mvn -B clean package -DskipTests --file rmis/pom.xml
-#      - name: Maven Verify
-#        run: mvn -B clean verify  --file rmis/pom.xml
-
-
-name: Java CI with Maven and MongoDB
+name : Java CI with Maven
 
 on:
   push:
@@ -32,54 +7,79 @@ on:
     branches: ["EniolaBranch"]
 
 jobs:
-
   test:
     name: Unit Test
     runs-on: ubuntu-latest
 
-    services:
-      mongodb:
-        image: mongo:6.0
-        ports:
-          - 27017:27017
-        options: >-
-          --health-cmd "mongosh --eval 'db.runCommand(\"ping\").ok'"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        # Optional: Set environment variables for initial user/database if needed
-        # env:
-        #   MONGO_INITDB_ROOT_USERNAME: your_username
-        #   MONGO_INITDB_ROOT_PASSWORD: your_password
-        #   MONGO_INITDB_DATABASE: your_database
-
     steps:
-      - uses: actions/checkout@v1 # Use a newer version of checkout action
+      - uses: actions/checkout@v1
       - name: Set up JDK 21
-        uses: actions/setup-java@v1 # Use a newer version of setup-java action
+        uses: actions/setup-java@v1
         with:
           java-version: '21'
-          distribution: 'temurin' # Recommended distribution
+      - name: Maven Package
+        run: mvn -B clean package -DskipTests --file rmis/pom.xml
+      - name: Maven Verify
+        run: mvn -B clean verify  --file rmis/pom.xml
 
-      - name: Wait for MongoDB to be ready
-        # This step ensures MongoDB is fully up and listening before your Java tests try to connect.
-        # It attempts to connect to port 27017 on localhost.
-        run: |
-          for i in seq 1 10; do
-            nc -z localhost 27017 && echo "MongoDB is ready" && break
-            echo "Waiting for MongoDB to start..."
-            sleep 5
-          done
 
-      - name: Maven Package (without tests, if you prefer to run tests separately)
-        run: mvn -B clean package -DskipTests --rmis/pom.xml
-
-      - name: Maven Verify (Run tests)
-        run: mvn -B verify --rmis/pom.xml
-        env:
-          # This environment variable will be available to your Java application
-          # when it runs its tests. Your Java code should read this to connect to MongoDB.
-          MONGODB_URI: "mongodb://localhost:27017/your_test_database"
-          # If you set authentication in the 'services' block, add these:
-          # MONGODB_USERNAME: ${{ services.mongodb.env.MONGO_INITDB_ROOT_USERNAME }}
-          # MONGODB_PASSWORD: ${{ services.mongodb.env.MONGO_INITDB_ROOT_PASSWORD }}
+#name: Java CI with Maven and MongoDB
+#
+#on:
+#  push:
+#    branches: ["EniolaBranch"]
+#  pull_request:
+#    branches: ["EniolaBranch"]
+#
+#jobs:
+#
+#  test:
+#    name: Unit Test
+#    runs-on: ubuntu-latest
+#
+#    services:
+#      mongodb:
+#        image: mongo:6.0
+#        ports:
+#          - 27017:27017
+#        options: >-
+#          --health-cmd "mongosh --eval 'db.runCommand(\"ping\").ok'"
+#          --health-interval 10s
+#          --health-timeout 5s
+#          --health-retries 5
+#        # Optional: Set environment variables for initial user/database if needed
+#        # env:
+#        #   MONGO_INITDB_ROOT_USERNAME: your_username
+#        #   MONGO_INITDB_ROOT_PASSWORD: your_password
+#        #   MONGO_INITDB_DATABASE: your_database
+#
+#    steps:
+#      - uses: actions/checkout@v1 # Use a newer version of checkout action
+#      - name: Set up JDK 21
+#        uses: actions/setup-java@v1 # Use a newer version of setup-java action
+#        with:
+#          java-version: '21'
+#          distribution: 'temurin' # Recommended distribution
+#
+#      - name: Wait for MongoDB to be ready
+#        # This step ensures MongoDB is fully up and listening before your Java tests try to connect.
+#        # It attempts to connect to port 27017 on localhost.
+#        run: |
+#          for i in seq 1 10; do
+#            nc -z localhost 27017 && echo "MongoDB is ready" && break
+#            echo "Waiting for MongoDB to start..."
+#            sleep 5
+#          done
+#
+#      - name: Maven Package (without tests, if you prefer to run tests separately)
+#        run: mvn -B clean package -DskipTests --rmis/pom.xml
+#
+#      - name: Maven Verify (Run tests)
+#        run: mvn -B verify --rmis/pom.xml
+#        env:
+#          # This environment variable will be available to your Java application
+#          # when it runs its tests. Your Java code should read this to connect to MongoDB.
+#          MONGODB_URI: "mongodb://localhost:27017/your_test_database"
+#          # If you set authentication in the 'services' block, add these:
+#          # MONGODB_USERNAME: ${{ services.mongodb.env.MONGO_INITDB_ROOT_USERNAME }}
+#          # MONGODB_PASSWORD: ${{ services.mongodb.env.MONGO_INITDB_ROOT_PASSWORD }}
