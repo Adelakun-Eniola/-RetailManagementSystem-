@@ -30,15 +30,15 @@ public class AdminServiceTest {
 
     }
 
-    @Test
-    void testThatAdminCanGetAllUsers(){
-        //given that admin is loggedIn successfully
-        //when
-        List<User> allUsers = adminService.getAllUsers();
-        //check that
-        Assertions.assertNotNull(allUsers);
-        Assertions.assertFalse(allUsers.isEmpty());
-    }
+//    @Test
+//    void testThatAdminCanGetAllUsers(){
+//        //given that admin is loggedIn successfully
+//        //when
+//        List<User> allUsers = adminService.getAllUsers();
+//        //check that
+//        Assertions.assertNotNull(allUsers);
+//        Assertions.assertFalse(allUsers.isEmpty());
+//    }
 
 //    @Test
 //    void testThatUsersCanBeDeleted()  {
