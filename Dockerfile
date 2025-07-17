@@ -6,7 +6,7 @@
 # Stage 1: Build the application
 FROM maven:3.8.7 AS build
 WORKDIR /app
-COPY pom.xml .
+COPY rmis/pom.xml .
 # Download dependencies first, useful for caching
 RUN mvn dependency:go-offline -B
 
