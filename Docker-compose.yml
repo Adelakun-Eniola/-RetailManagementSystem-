@@ -2,7 +2,7 @@ version: "3"
 
 services:
   rmis:
-    build: ./rmis
+    build: ./rmis/rmis
     container_name: rmis-app
     ports:
       - "8080"
@@ -13,7 +13,7 @@ services:
     networks:
       - app-network
 
-  db:
+  mongo:
     image: mongo:6
     container_name: mongo-db
     ports:
@@ -27,4 +27,4 @@ volumes:
   mongodbdata:
 
 networks:
-  app-network:  # fixed name here
+  app-network:
