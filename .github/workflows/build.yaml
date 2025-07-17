@@ -25,9 +25,9 @@ jobs:
         with:
           java-version: '21'
       - name: Maven Package
-        run: mvn -B clean package -DskipTests --file rmis/pom.xml
+        run: mvn -B clean package -DskipTests
       - name: Maven Verify
-        run: mvn -B clean verify  --file rmis/pom.xml
+        run: mvn -B clean verify
 
   build:
     runs-on: ubuntu-latest
@@ -42,7 +42,7 @@ jobs:
           cache: maven
 
       - name: Build with Maven
-        run: mvn -B clean package --file pom.xml
+        run: mvn -B clean package
         working-directory: ./rmis
 
   docker:
