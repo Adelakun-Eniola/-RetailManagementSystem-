@@ -7,5 +7,5 @@ import com.appliation.rmis.dtos.response.userResponse.staffResponse.StaffSignUpR
 
 public interface UserService {
     StaffSignUpResponse createAccount(StaffSignUpRequest staffSignUpRequest);
-    UserLoginResponse loginAccount(UsersLoginRequest usersLoginRequest);
+//    UserLoginResponse loginAccount(UsersLoginRequest usersLoginRequest);
 }

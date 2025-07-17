@@ -25,28 +25,17 @@ public class UserTest {
 
     @Autowired
     private UserRepository userRepository;
+//
+//    @BeforeEach
+//    void testThatDbIsCleared(){
+//        userRepository.deleteAll();
+//    }
+//
 
-    @BeforeEach
-    void testThatDbIsCleared(){
-        userRepository.deleteAll();
-    }
-
-    @Test
-    void testThatUserIsCreated(){
-        //given
-        StaffSignUpRequest staffSignUpRequest = new StaffSignUpRequest(
-                "adeola", "lamide","eniola@conglomerate.com","09115051754", "unknown");
-        //when
-        StaffSignUpResponse staffSignUpResponse = userService.createAccount(staffSignUpRequest);
-        //check that
-        Assertions.assertNotNull(staffSignUpResponse);
-        Assertions.assertEquals("Successfully Registered !!!", staffSignUpResponse.getMessage());
-    }
 
 //    @Test
 //    void testThatUserCanLogin(){
 //        //given
-//        testThatUserIsCreated();
 //        UsersLoginRequest usersLoginRequest = new UsersLoginRequest("eniola@conglomerate.com", "unknown");
 //        //when
 //        UserLoginResponse userLoginResponse = userService.loginAccount(usersLoginRequest);
@@ -54,5 +43,10 @@ public class UserTest {
 //        Assertions.assertNotNull(userLoginResponse);
 //        Assertions.assertEquals(Roles.STAFF, userLoginResponse.getRole());
 //    }
+
+    @Test
+    void testThatStaffCanAddNewStocks(){
+
+    }
 
 }

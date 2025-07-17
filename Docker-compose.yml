@@ -1,0 +1,30 @@
+version: "3"
+
+#services
+services:
+  backend:
+    build: ./rmis
+    container_name: rmis-app
+    ports:
+      - "8080"
+    environment:
+      - SPRING_DATA_MONGODB_URI = mongodb://mongo:27017/mydatabase
+    depends_on:
+      - mongo
+    networks:
+      - app-network
+
+  mongo:
+    image: mongo:6
+    container_name: mongo-db
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodbdata:/data/db
+    networks:
+      - app-network
+volumes:
+    mongodbdata:
+
+networks:
+  app-networks:
